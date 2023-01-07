@@ -1,0 +1,15 @@
+# System
+.DS_Store
+
+# IDE
+.fleet/
+.idea/
+.vscode/
+
+# Lang
+Cargo.lock
+
+# Binaries
+*.o
+build/
+target/

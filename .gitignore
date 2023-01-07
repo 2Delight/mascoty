@@ -1,0 +1,21 @@
+# System
+.DS_Store
+
+# IDE
+.fleet/
+.idea/
+.vscode/
+
+# Builders
+Cargo.lock
+gradlew
+settings.gradle
+.gradle/
+
+# Binaries
+*.o
+target/
+build/
+out/
+gradle/
+gradlew.bat

@@ -1,0 +1,19 @@
+syntax = "proto3";
+
+option java_package = "org.mascoty";
+option java_multiple_files = true;
+
+package mascot;
+
+service Mascot {
+  rpc GetMascot(MascotRequest) returns (MascotResponse);
+}
+
+message MascotRequest {}
+
+message MascotResponse {
+  string emotion = 1;
+  bool blink = 2;
+  bool lips = 3;
+  uint32 voice = 4;
+}
