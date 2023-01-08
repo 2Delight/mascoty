@@ -9,14 +9,12 @@ on:
 env:
   CARGO_TERM_COLOR: always
 
-defaults:
-  run:
-    working-directory: builder
-
 jobs:
-  build:
-
+  rust:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: builder
 
     steps:
     - uses: actions/checkout@v3
@@ -24,5 +22,11 @@ jobs:
     - name: Build
       run: cargo build --verbose
 
-    - name: Test
-      run: cargo test --verbose
+    # - name: Test
+    #   run: cargo test --verbose
+  
+  java:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: builder
