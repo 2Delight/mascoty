@@ -12,21 +12,16 @@ env:
 jobs:
   rust:
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: builder
 
     steps:
     - uses: actions/checkout@v3
     
     - name: Build
       run: cargo build --verbose
+      working-directory: builder
 
     # - name: Test
     #   run: cargo test --verbose
   
-  java:
-    runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: builder
+  # java:
+  #   runs-on: ubuntu-latest
