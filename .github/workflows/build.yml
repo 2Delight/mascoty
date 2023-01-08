@@ -14,17 +14,32 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v3
+      - uses: actions/checkout@v3
 
-    - name: Install ProtocolBuffers
-      run: sudo apt install -y protobuf-compiler
-    
-    - name: Build
-      run: cargo build --verbose
-      working-directory: builder
+      - name: Install ProtocolBuffers
+        run: sudo apt install -y protobuf-compiler
+      
+      - name: Build
+        run: cargo build --verbose
+        working-directory: builder
 
-    # - name: Test
-    #   run: cargo test --verbose
+      # - name: Test
+      #   run: cargo test --verbose
+      #   working-directory: builder
   
-  # java:
-  #   runs-on: ubuntu-latest
+  java:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Install ProtocolBuffers
+        run: sudo apt install -y protobuf-compiler
+      
+      - name: Build
+        run: gradle build
+        working-directory: desktop
+      
+      # - name: Test
+      #   run: gradle test
+      #   working-directory: desktop
