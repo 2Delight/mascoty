@@ -16,14 +16,8 @@ jobs:
     steps:
     - uses: actions/checkout@v3
 
-    # - name: Install protobuf
-    #   run: |
-    #         apk add --update make git
-    #         git describe --tags
-    #         git symbolic-ref --short HEAD
-    #         pwd
-    #         make install-prototool
-    #         prototool version
+    - name: Install ProtocolBuffers
+      run: apt install -y protobuf-compiler
     
     - name: Build
       run: cargo build --verbose
