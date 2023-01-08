@@ -2,6 +2,7 @@ mod config;
 mod mascot;
 #[macro_use]
 mod utils;
+mod service;
 
 extern crate log;
 extern crate rand;
@@ -15,35 +16,9 @@ use config::config::{import_config};
 use log::{debug, info, warn, error};
 use simple_logger::SimpleLogger;
 
-use crate::mascot::get_mascot;
-use grpc::mascot_server::{Mascot, MascotServer};
-use grpc::{MascotRequest, MascotResponse};
-use tonic::{transport::Server, Request, Response, Status};
-
-pub mod grpc {
-    tonic::include_proto!("mascot");
-}
-
-#[derive(Debug, Default)]
-pub struct MascotService {}
-
-#[tonic::async_trait]
-impl Mascot for MascotService {
-    async fn get_mascot(
-        &self,
-        _: Request<MascotRequest>,
-    ) -> Result<Response<MascotResponse>, Status> {
-        let mascot = get_mascot();
-        info!("Sending response: {:?}", mascot);
-
-        Ok(Response::new(MascotResponse{
-            emotion: mascot.emotion,
-            blink: mascot.blink,
-            lips: mascot.lips,
-            voice: mascot.voice as u32,
-        }))
-    }
-}
+use service::MascotService;
+use service::grpc::mascot_server::{MascotServer};
+use tonic::{transport::Server};
 
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn std::error::Error>> {
