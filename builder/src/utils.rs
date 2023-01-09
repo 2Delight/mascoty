@@ -17,7 +17,7 @@ macro_rules! panic_error {
     ($e:expr, $s:expr) => {
         match $e {
             Ok(val) => {
-                debug!("Success during {}: {:?}", $s, val);
+                // debug!("Success during {}: {:?}", $s, val);
                 val
             },
             Err(err) => {

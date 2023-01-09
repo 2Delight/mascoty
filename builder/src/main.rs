@@ -1,10 +1,12 @@
 mod config;
+mod input;
 mod mascot;
+mod service;
 #[macro_use]
 mod utils;
-mod service;
 
 extern crate log;
+extern crate nokhwa;
 extern crate rand;
 extern crate serde;
 extern crate serde_json;
@@ -15,6 +17,8 @@ use config::config::{import_config};
 
 use log::{debug, info, warn, error};
 use simple_logger::SimpleLogger;
+
+use input::{Devices, Input, get_devices, get_input};
 
 use service::MascotService;
 use service::grpc::mascot_server::{MascotServer};
@@ -29,6 +33,8 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
 
     info!("Config parsing");
     let conf = panic_error!(import_config(), "config parsing");
+
+    let devices = panic_error!(get_devices(), "devices initialization");
 
     info!("Server was waken up");
     Server::builder()
