@@ -1,4 +1,5 @@
 use nokhwa::{Camera, CameraFormat, CaptureAPIBackend, FrameFormat, NokhwaError, query_devices};
+use crate::panic_error;
 
 pub struct Devices {
     camera: Camera,
@@ -40,7 +41,14 @@ pub fn get_devices() -> Result<Devices, NokhwaError> {
     )
 }
 
-pub fn get_input(devices: &mut Devices) -> Result<Input, NokhwaError> {
+pub fn get_input() -> Result<Input, NokhwaError> {
+    // let mut devices = match get_devices() {
+    //     Ok(v) => v,
+    //     Err(e) => return Err(e),
+    // };
+
+    let mut devices = panic_error!(get_devices(), "getting devices");
+
     let frame = devices.camera.frame()?;
     frame.into_vec();
     Ok(Input{})

@@ -26,15 +26,13 @@ use tonic::{transport::Server};
 
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn std::error::Error>> {
-    match SimpleLogger::new().with_level(log::LevelFilter::Info).init() {
+    match SimpleLogger::new().with_level(log::LevelFilter::Debug).init() {
         Err(err) => panic!("Cannot initialize logger: {:?}", err),
         _ => {}
     };
 
     info!("Config parsing");
     let conf = panic_error!(import_config(), "config parsing");
-
-    let devices = panic_error!(get_devices(), "devices initialization");
 
     info!("Server was waken up");
     Server::builder()
