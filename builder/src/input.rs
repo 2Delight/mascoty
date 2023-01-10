@@ -1,4 +1,8 @@
-use nokhwa::{Camera, CameraFormat, CaptureAPIBackend, FrameFormat, NokhwaError, query_devices};
+use nokhwa::query;
+use nokhwa::utils::{ApiBackend, CameraFormat, FrameFormat, RequestedFormat, RequestedFormatType};
+use nokhwa::Camera;
+use nokhwa::pixel_format::RgbFormat;
+use nokhwa::NokhwaError;
 use crate::panic_error;
 
 pub struct Devices {
@@ -9,7 +13,8 @@ pub struct Input {
 }
 
 pub fn get_devices() -> Result<Devices, NokhwaError> {
-    let cams = query_devices(CaptureAPIBackend::Auto)?;
+    let cams = query(ApiBackend::Auto)?;
+
     println!("{}", cams.len());
     println!("{}", cams[0].index());
 
@@ -21,13 +26,9 @@ pub fn get_devices() -> Result<Devices, NokhwaError> {
         );
     }
 
-    let mut camera = Camera::new(
-        cams[0].index(),
-        Some(
-            CameraFormat::new_from(1280, 720, FrameFormat::MJPEG, 30)
-        ),
-    )
-    .unwrap();
+    let format_type = RequestedFormatType::Exact(CameraFormat::new_from(1280, 720, FrameFormat::MJPEG, 30));
+    let format = RequestedFormat::new::<RgbFormat>(format_type);
+    let mut camera = Camera::new(cams[0].index().to_owned(), format).unwrap();
 
     println!("{}", camera.info());
 
@@ -42,14 +43,8 @@ pub fn get_devices() -> Result<Devices, NokhwaError> {
 }
 
 pub fn get_input() -> Result<Input, NokhwaError> {
-    // let mut devices = match get_devices() {
-    //     Ok(v) => v,
-    //     Err(e) => return Err(e),
-    // };
-
     let mut devices = panic_error!(get_devices(), "getting devices");
 
     let frame = devices.camera.frame()?;
-    frame.into_vec();
     Ok(Input{})
 }

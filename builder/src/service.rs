@@ -1,6 +1,9 @@
 use crate::input::Devices;
 use crate::mascot::get_mascot;
 
+use std::sync::Mutex;
+use std::sync::Arc;
+
 use log::{debug, info, warn, error};
 
 use grpc::mascot_server::{Mascot};
@@ -12,7 +15,10 @@ pub mod grpc {
 }
 
 #[derive(Debug, Default)]
-pub struct MascotService {}
+pub struct MascotService {
+    // devices: Devices,
+    // devices: Arc<Mutex<Devices>>,
+}
 
 #[tonic::async_trait]
 impl Mascot for MascotService {
