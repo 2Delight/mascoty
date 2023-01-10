@@ -6,23 +6,33 @@ edition = "2021"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-serde = { version = "1.0.144", features = ["derive"] }
+serde = { version = "1.0.144", features = [ "derive" ] }
 serde_json = "1.0.85"
 serde_yaml = "0.9.11"
 
 log = "0.4.17"
 simple_logger = "4.0.0"
 
-openssl = { version = "0.10", features = ["vendored"] }
+openssl = { version = "0.10", features = [ "vendored" ] }
 rand = "0.8.4"
 
-tonic = "0.8.3"
 prost = "0.11.5"
-tokio = { version = "1.23.0", features = [ "macros", "rt-multi-thread" ] }
+tonic = "0.8.3"
+
+[dependencies.tokio]
+version = "1.24.1"
+features = [
+    "macros",
+    "rt-multi-thread",
+]
 
 [dependencies.nokhwa]
 version = "0.10.3"
-features = ["input-avfoundation", "input-msmf", "output-wgpu"]
+features = [
+    "input-avfoundation",
+    "input-msmf",
+    "output-wgpu",
+]
 
 [build-dependencies]
 tonic-build = "0.8.3"
