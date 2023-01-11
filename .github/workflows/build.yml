@@ -27,9 +27,9 @@ jobs:
         run: cargo build --release --verbose --verbose
         working-directory: builder
 
-      # - name: Test
-      #   run: cargo test --verbose
-      #   working-directory: builder
+      - name: Test
+        run: cargo test --verbose --verbose
+        working-directory: builder
 
   java:
     runs-on: ubuntu-latest
