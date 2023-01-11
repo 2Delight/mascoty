@@ -5,6 +5,7 @@ use nokhwa::pixel_format::RgbFormat;
 use nokhwa::utils::{ApiBackend, CameraFormat, FrameFormat, RequestedFormat, RequestedFormatType};
 
 use std::sync::Mutex;
+// use std::cell::RefCell;
 
 pub struct Devices {
     camera: Mutex<Camera>,
