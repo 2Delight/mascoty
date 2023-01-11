@@ -32,7 +32,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
     };
 
     info!("Config parsing");
-    let conf = panic_error!(import_config(), "config parsing");
+    let conf = panic_error!(import_config("src/config/config.yaml"), "config parsing");
 
     info!("Server was waken up");
     Server::builder()
