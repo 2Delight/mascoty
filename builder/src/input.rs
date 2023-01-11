@@ -1,11 +1,13 @@
 use crate::panic_error;
 
+use std::sync::Mutex;
+// use std::cell::RefCell;
+
 use nokhwa::{Camera, NokhwaError, query};
 use nokhwa::pixel_format::RgbFormat;
 use nokhwa::utils::{ApiBackend, CameraFormat, FrameFormat, RequestedFormat, RequestedFormatType};
 
-use std::sync::Mutex;
-// use std::cell::RefCell;
+use log::{debug, info, warn, error};
 
 pub struct Devices {
     camera: Mutex<Camera>,
@@ -20,9 +22,7 @@ pub struct Input {}
 pub fn get_devices() -> Result<Devices, NokhwaError> {
     let cams = query(ApiBackend::Auto)?;
 
-    println!("{}", cams.len());
-    println!("{}", cams[0].index());
-
+    info!("Number of cameras: {}", cams.len());
     if cams.len() == 0 {
         return Err(
             NokhwaError::GeneralError(
@@ -31,14 +31,13 @@ pub fn get_devices() -> Result<Devices, NokhwaError> {
         );
     }
 
+    info!("First camera index: {}", cams[0].index());
     let format_type = RequestedFormatType::Exact(CameraFormat::new_from(1280, 720, FrameFormat::MJPEG, 30));
     let format = RequestedFormat::new::<RgbFormat>(format_type);
     let mut camera = Camera::new(cams[0].index().to_owned(), format).unwrap();
 
-    println!("{}", camera.info());
-
+    info!("Camera info: {}", camera.info());
     camera.open_stream()?;
-
     Ok(
         Devices
         {
@@ -48,8 +47,10 @@ pub fn get_devices() -> Result<Devices, NokhwaError> {
 }
 
 pub fn get_input(devices: &Devices) -> Result<Input, NokhwaError> {
+    info!("Getting input");
     let mut camera = panic_error!(devices.camera.lock(), "failed to lock mutex");
     let frame = camera.frame()?;
+    info!("Frame resolution: {}", frame.resolution());
 
     Ok(Input{})
 }

@@ -1,5 +1,7 @@
 use std::fs::File;
 use std::error::Error;
+
+use log::{debug, info, warn, error};
 use serde_yaml;
 use serde::{Serialize, Deserialize};
 
@@ -15,8 +17,10 @@ pub struct Server {
 }
 
 pub fn import_config(path: &str) -> Result<Config, Box<dyn Error>> {
+    info!("Reading config file");
     let file = File::open(path)?;
 
+    info!("Deserealizing YAML");
     match serde_yaml::from_reader(file) {
         Ok(conf) => Ok(conf),
         Err(err) => Err(Box::new(err)),

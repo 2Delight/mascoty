@@ -18,7 +18,7 @@ use config::config::{import_config};
 use log::{debug, info, warn, error};
 use simple_logger::SimpleLogger;
 
-use input::{Devices, Input, get_devices, get_input};
+use input::get_devices;
 
 use service::MascotService;
 use service::grpc::mascot_server::MascotServer;
@@ -34,6 +34,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
     info!("Config parsing");
     let conf = panic_error!(import_config("src/config/config.yaml"), "config parsing");
 
+    info!("Getting devices");
     let devices = panic_error!(get_devices(), "getting devices");
 
     info!("Server was waken up");

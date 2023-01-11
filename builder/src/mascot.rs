@@ -3,6 +3,8 @@ use crate::input::{get_input, Devices};
 use rand::Rng;
 use serde::{Serialize, Deserialize};
 
+use crate::panic_error;
+
 #[derive(Debug, Serialize, Deserialize)]
 pub struct Mascot {
     pub emotion: String,
@@ -28,7 +30,8 @@ fn voice_ml() -> (String, u8) {
 }
 
 pub fn get_mascot(devices: &Devices) -> Mascot {
-    let input = get_input(devices);
+    let input = panic_error!(get_input(devices), "getting input");
+
     let mut mascot = Mascot {
         emotion: String::new(),
         blink: true,
