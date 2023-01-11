@@ -1,9 +1,8 @@
-use nokhwa::query;
-use nokhwa::utils::{ApiBackend, CameraFormat, FrameFormat, RequestedFormat, RequestedFormatType};
-use nokhwa::Camera;
-use nokhwa::pixel_format::RgbFormat;
-use nokhwa::NokhwaError;
 use crate::panic_error;
+
+use nokhwa::{Camera, NokhwaError, query};
+use nokhwa::pixel_format::RgbFormat;
+use nokhwa::utils::{ApiBackend, CameraFormat, FrameFormat, RequestedFormat, RequestedFormatType};
 
 pub struct Devices {
     camera: Camera,

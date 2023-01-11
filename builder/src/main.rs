@@ -21,7 +21,7 @@ use simple_logger::SimpleLogger;
 use input::{Devices, Input, get_devices, get_input};
 
 use service::MascotService;
-use service::grpc::mascot_server::{MascotServer};
+use service::grpc::mascot_server::MascotServer;
 use tonic::{transport::Server};
 
 #[tokio::main]

@@ -1,13 +1,14 @@
 use crate::input::Devices;
 use crate::mascot::get_mascot;
 
+use grpc::mascot_server::Mascot;
+use grpc::{MascotRequest, MascotResponse};
+
 use std::sync::Mutex;
 use std::sync::Arc;
 
 use log::{debug, info, warn, error};
 
-use grpc::mascot_server::{Mascot};
-use grpc::{MascotRequest, MascotResponse};
 use tonic::{Request, Response, Status};
 
 pub mod grpc {
