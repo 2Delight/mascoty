@@ -47,10 +47,13 @@ pub fn get_devices() -> Result<Devices, NokhwaError> {
 }
 
 pub fn get_input(devices: &Devices) -> Result<Input, NokhwaError> {
-    info!("Getting input");
+    debug!("Getting input");
     let mut camera = panic_error!(devices.camera.lock(), "failed to lock mutex");
     let frame = camera.frame()?;
-    info!("Frame resolution: {}", frame.resolution());
+    
+    let rgb = frame.decode_image::<RgbFormat>().unwrap();
+    rgb.get_pixel(10, 10);
+    info!("Frame resolution: {}; Pixel: {:?}", frame.resolution(), rgb.get_pixel(10, 10));
 
     Ok(Input{})
 }
