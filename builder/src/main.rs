@@ -1,10 +1,12 @@
 mod config;
+mod input;
 mod mascot;
+mod service;
 #[macro_use]
 mod utils;
-mod service;
 
 extern crate log;
+extern crate nokhwa;
 extern crate rand;
 extern crate serde;
 extern crate serde_json;
@@ -16,13 +18,15 @@ use config::config::{import_config};
 use log::{debug, info, warn, error};
 use simple_logger::SimpleLogger;
 
+use input::{Devices, Input, get_devices, get_input};
+
 use service::MascotService;
 use service::grpc::mascot_server::{MascotServer};
 use tonic::{transport::Server};
 
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn std::error::Error>> {
-    match SimpleLogger::new().with_level(log::LevelFilter::Info).init() {
+    match SimpleLogger::new().with_level(log::LevelFilter::Debug).init() {
         Err(err) => panic!("Cannot initialize logger: {:?}", err),
         _ => {}
     };

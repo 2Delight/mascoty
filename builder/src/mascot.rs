@@ -1,4 +1,4 @@
-extern crate rand;
+use crate::input::{get_input, Devices};
 
 use rand::Rng;
 use serde::{Serialize, Deserialize};
@@ -28,6 +28,7 @@ fn voice_ml() -> (String, u8) {
 }
 
 pub fn get_mascot() -> Mascot {
+    let input = get_input();
     let mut mascot = Mascot {
         emotion: String::new(),
         blink: true,
