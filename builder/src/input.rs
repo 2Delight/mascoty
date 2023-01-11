@@ -4,12 +4,17 @@ use nokhwa::{Camera, NokhwaError, query};
 use nokhwa::pixel_format::RgbFormat;
 use nokhwa::utils::{ApiBackend, CameraFormat, FrameFormat, RequestedFormat, RequestedFormatType};
 
+use std::sync::Mutex;
+
 pub struct Devices {
-    camera: Camera,
+    camera: Mutex<Camera>,
 }
 
-pub struct Input {
-}
+unsafe impl Sync for Devices {}
+
+unsafe impl Send for Devices {}
+
+pub struct Input {}
 
 pub fn get_devices() -> Result<Devices, NokhwaError> {
     let cams = query(ApiBackend::Auto)?;
@@ -36,14 +41,14 @@ pub fn get_devices() -> Result<Devices, NokhwaError> {
     Ok(
         Devices
         {
-            camera: camera,
+            camera: Mutex::new(camera),
         },
     )
 }
 
-pub fn get_input() -> Result<Input, NokhwaError> {
-    let mut devices = panic_error!(get_devices(), "getting devices");
+pub fn get_input(devices: &Devices) -> Result<Input, NokhwaError> {
+    let mut camera = panic_error!(devices.camera.lock(), "failed to lock mutex");
+    let frame = camera.frame()?;
 
-    let frame = devices.camera.frame()?;
     Ok(Input{})
 }

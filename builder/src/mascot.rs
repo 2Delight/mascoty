@@ -27,8 +27,8 @@ fn voice_ml() -> (String, u8) {
     )
 }
 
-pub fn get_mascot() -> Mascot {
-    let input = get_input();
+pub fn get_mascot(devices: &Devices) -> Mascot {
+    let input = get_input(devices);
     let mut mascot = Mascot {
         emotion: String::new(),
         blink: true,

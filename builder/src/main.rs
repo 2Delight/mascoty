@@ -34,11 +34,15 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
     info!("Config parsing");
     let conf = panic_error!(import_config("src/config/config.yaml"), "config parsing");
 
+    let devices = panic_error!(get_devices(), "getting devices");
+
     info!("Server was waken up");
     Server::builder()
         .add_service(
             MascotServer::new(
-                MascotService::default(),
+                MascotService{
+                    devices: devices,
+                },
             ),
         )
         .serve(format!("{}:{}", conf.server.url, conf.server.port).parse()?)
