@@ -27,14 +27,16 @@ use tonic::transport::Server;
 
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn std::error::Error>> {
-    dotenv().ok().expect("Failed to work with .env");
-
     match SimpleLogger::new()
         .with_level(log::LevelFilter::Debug)
-        .init()
-    {
+        .init() {
+        Ok(()) => {},
         Err(err) => panic!("Cannot initialize logger: {:?}", err),
-        _ => {}
+    };
+
+    match dotenv().ok() {
+        Some(_) => debug!("Successfully imported data from .env"),
+        None => debug!("Failed to work with .env"),
     };
 
     debug!("Config parsing");
