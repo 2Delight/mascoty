@@ -3,7 +3,7 @@ macro_rules! check_error {
     ($e:expr, $s:expr) => {
         match $e {
             Ok(val) => {
-                crate::debug!("Success during {}: {:?}", $s, val);
+                crate::debug!("Successfully complited {}", $s);
                 val
             },
             Err(err) => {
@@ -19,7 +19,7 @@ macro_rules! panic_error {
     ($e:expr, $s:expr) => {
         match $e {
             Ok(val) => {
-                // crate::debug!("Success during {}: {:?}", $s, val);
+                crate::debug!("Successfully completed {}", $s);
                 val
             },
             Err(err) => {

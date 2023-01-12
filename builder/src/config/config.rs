@@ -28,7 +28,7 @@ pub fn import_config(path: &str) -> Result<Config, Box<dyn Error>> {
     debug!("Reading config file");
     let file = File::open(path)?;
 
-    debug!("Deserealizing YAML");
+    debug!("Deserializing YAML");
     match serde_yaml::from_reader(file) {
         Ok(conf) => Ok(conf),
         Err(err) => Err(Box::new(err)),

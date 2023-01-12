@@ -1,9 +1,9 @@
 use crate::input::{get_input, Devices};
+use crate::panic_error;
 
 use rand::Rng;
 use serde::{Serialize, Deserialize};
-
-use crate::panic_error;
+use log::{debug, error, info, warn};
 
 #[derive(Debug, Serialize, Deserialize)]
 pub struct Mascot {
@@ -31,6 +31,7 @@ fn voice_ml() -> (String, u8) {
 }
 
 pub fn get_mascot(devices: &Devices) -> Mascot {
+    debug!("Getting mascot");
     let input = panic_error!(get_input(devices), "getting input");
 
     let mut mascot = Mascot {
@@ -48,5 +49,6 @@ pub fn get_mascot(devices: &Devices) -> Mascot {
     mascot.lips = lips;
     mascot.voice = voice;
 
+    debug!("Mascot has been created");
     mascot
 }

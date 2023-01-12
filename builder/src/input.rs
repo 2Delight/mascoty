@@ -21,6 +21,7 @@ unsafe impl Send for Devices {}
 pub struct Input {}
 
 pub fn get_devices(config: &Config) -> Result<Devices, NokhwaError> {
+    debug!("Getting devices");
     let cams = query(ApiBackend::Auto)?;
 
     info!("Number of cameras: {}", cams.len());
@@ -33,6 +34,7 @@ pub fn get_devices(config: &Config) -> Result<Devices, NokhwaError> {
     }
 
     info!("First camera index: {}", cams[0].index());
+    debug!("Connecting to camera");
     let format_type =
         RequestedFormatType::Exact(
             CameraFormat::new_from(
@@ -44,9 +46,12 @@ pub fn get_devices(config: &Config) -> Result<Devices, NokhwaError> {
         );
     let format = RequestedFormat::new::<RgbFormat>(format_type);
     let mut camera = Camera::new(cams[0].index().to_owned(), format)?;
-
     info!("Camera info: {}", camera.info());
+    
+    debug!("Openning stream");
     camera.open_stream()?;
+
+    debug!("Camera has been initialized");
     Ok(
         Devices {
             camera: Mutex::new(camera),
@@ -58,6 +63,7 @@ pub fn get_input(devices: &Devices) -> Result<Input, NokhwaError> {
     debug!("Getting input");
     debug!("Getting camera instance");
     let mut camera = panic_error!(devices.camera.lock(), "failed to lock mutex");
+
     debug!("Getting frame");
     let frame = camera.frame()?;
 
@@ -70,5 +76,6 @@ pub fn get_input(devices: &Devices) -> Result<Input, NokhwaError> {
         rgb.get_pixel(10, 10)
     );
 
+    debug!("Sending info");
     Ok(Input {})
 }
