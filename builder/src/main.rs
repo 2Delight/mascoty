@@ -36,6 +36,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
 
     debug!("Config parsing");
     let conf = panic_error!(import_config("src/config/config.yaml"), "config parsing");
+    info!("Config: {:?}", conf);
 
     debug!("Getting devices");
     let devices = panic_error!(get_devices(&conf), "getting devices");
@@ -46,6 +47,6 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
         .serve(format!("{}:{}", conf.server.url, conf.server.port).parse()?)
         .await?;
 
-    info!("Server was shut down");
+    debug!("Server was shut down");
     Ok(())
 }
