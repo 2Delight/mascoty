@@ -1,5 +1,5 @@
-use crate::panic_error;
 use crate::config::config::Config;
+use crate::panic_error;
 
 use std::sync::Mutex;
 // use std::cell::RefCell;
@@ -28,22 +28,21 @@ pub fn get_devices(config: &Config) -> Result<Devices, NokhwaError> {
     if cams.len() == 0 {
         return Err(
             NokhwaError::GeneralError(
-                "Cannot find any connected camera!".to_string(),
+                "Cannot find any connected camera".to_string(),
             ),
         );
     }
 
     info!("First camera index: {}", cams[0].index());
     debug!("Connecting to camera");
-    let format_type =
-        RequestedFormatType::Exact(
-            CameraFormat::new_from(
-                config.camera.width,
-                config.camera.height,
-                FrameFormat::MJPEG,
-                config.camera.fps,
-            ),
-        );
+    let format_type = RequestedFormatType::Exact(
+        CameraFormat::new_from(
+            config.camera.width,
+            config.camera.height,
+            FrameFormat::MJPEG,
+            config.camera.fps,
+        ),
+    );
     let format = RequestedFormat::new::<RgbFormat>(format_type);
     let mut camera = Camera::new(cams[0].index().to_owned(), format)?;
     info!("Camera info: {}", camera.info());
@@ -73,7 +72,7 @@ pub fn get_input(devices: &Devices) -> Result<Input, NokhwaError> {
     info!(
         "Frame resolution: {}; Pixel: {:?}",
         frame.resolution(),
-        rgb.get_pixel(10, 10)
+        rgb.get_pixel(10, 10),
     );
 
     debug!("Sending info");

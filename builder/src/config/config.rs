@@ -37,7 +37,7 @@ pub fn import_config(path: &str) -> Result<Config, Box<dyn Error>> {
 
 #[cfg(test)]
 mod tests {
-    use crate::config::config::*;
+    use crate::config::config::import_config;
 
     #[test]
     fn check_config_right_path() {

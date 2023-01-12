@@ -2,7 +2,6 @@ mod config;
 mod input;
 mod mascot;
 mod service;
-#[macro_use]
 mod utils;
 
 extern crate dotenv;
@@ -14,16 +13,16 @@ extern crate serde_json;
 extern crate serde_yaml;
 extern crate simple_logger;
 
-use config::config::import_config;
-use input::get_devices;
+use crate::config::config::import_config;
+use crate::input::get_devices;
 
+use crate::service::grpc::mascot_server::MascotServer;
+use crate::service::MascotService;
+use tonic::transport::Server;
+
+use dotenv::dotenv;
 use log::{debug, error, info, warn};
 use simple_logger::SimpleLogger;
-use dotenv::dotenv;
-
-use service::grpc::mascot_server::MascotServer;
-use service::MascotService;
-use tonic::transport::Server;
 
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn std::error::Error>> {

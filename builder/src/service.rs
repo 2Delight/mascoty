@@ -1,12 +1,11 @@
 use crate::input::Devices;
 use crate::mascot::get_mascot;
 
-use grpc::mascot_server::Mascot;
-use grpc::{MascotRequest, MascotResponse};
+use crate::service::grpc::mascot_server::Mascot;
+use crate::service::grpc::{MascotRequest, MascotResponse};
+use tonic::{Request, Response, Status};
 
 use log::{debug, error, info, warn};
-
-use tonic::{Request, Response, Status};
 
 pub mod grpc {
     tonic::include_proto!("mascot");
