@@ -8,12 +8,20 @@ use serde::{Serialize, Deserialize};
 #[derive(Debug, Serialize, Deserialize)]
 pub struct Config {
     pub server: Server,
+    pub camera: Camera,
 }
 
 #[derive(Debug, Serialize, Deserialize)]
 pub struct Server {
     pub url: String,
     pub port: u16,
+}
+
+#[derive(Debug, Serialize, Deserialize)]
+pub struct Camera {
+    pub height: u32,
+    pub width: u32,
+    pub fps: u32,
 }
 
 pub fn import_config(path: &str) -> Result<Config, Box<dyn Error>> {

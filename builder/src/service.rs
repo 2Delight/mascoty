@@ -4,7 +4,7 @@ use crate::mascot::get_mascot;
 use grpc::mascot_server::Mascot;
 use grpc::{MascotRequest, MascotResponse};
 
-use log::{debug, info, warn, error};
+use log::{debug, error, info, warn};
 
 use tonic::{Request, Response, Status};
 
@@ -22,7 +22,7 @@ impl Mascot for MascotService {
         let mascot = get_mascot(&self.devices);
         info!("Sending response: {:?}", mascot);
 
-        Ok(Response::new(MascotResponse{
+        Ok(Response::new(MascotResponse {
             emotion: mascot.emotion,
             blink: mascot.blink,
             lips: mascot.lips,

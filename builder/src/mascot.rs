@@ -17,7 +17,8 @@ fn face_ml() -> (String, bool, bool) {
     let mut rng = rand::thread_rng();
     (
         String::new(),
-        rng.gen::<bool>(), rng.gen::<bool>(),
+        rng.gen::<bool>(),
+        rng.gen::<bool>(),
     )
 }
 
