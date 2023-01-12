@@ -56,9 +56,12 @@ pub fn get_devices(config: &Config) -> Result<Devices, NokhwaError> {
 
 pub fn get_input(devices: &Devices) -> Result<Input, NokhwaError> {
     debug!("Getting input");
+    debug!("Getting camera instance");
     let mut camera = panic_error!(devices.camera.lock(), "failed to lock mutex");
+    debug!("Getting frame");
     let frame = camera.frame()?;
 
+    debug!("Decoding image");
     let rgb = frame.decode_image::<RgbFormat>()?;
     rgb.get_pixel(10, 10);
     info!(

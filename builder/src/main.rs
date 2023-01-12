@@ -5,6 +5,7 @@ mod service;
 #[macro_use]
 mod utils;
 
+extern crate dotenv;
 extern crate log;
 extern crate nokhwa;
 extern crate rand;
@@ -14,11 +15,11 @@ extern crate serde_yaml;
 extern crate simple_logger;
 
 use config::config::import_config;
+use input::get_devices;
 
 use log::{debug, error, info, warn};
 use simple_logger::SimpleLogger;
-
-use input::get_devices;
+use dotenv::dotenv;
 
 use service::grpc::mascot_server::MascotServer;
 use service::MascotService;
@@ -26,6 +27,8 @@ use tonic::transport::Server;
 
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn std::error::Error>> {
+    dotenv().ok().expect("Failed to work with .env");
+
     match SimpleLogger::new()
         .with_level(log::LevelFilter::Debug)
         .init()
