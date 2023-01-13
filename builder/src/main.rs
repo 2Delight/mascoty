@@ -48,7 +48,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
     debug!("Server was waken up");
     Server::builder()
         .add_service(MascotServer::new(MascotService { devices: devices }))
-        .serve(format!("{}:{}", conf.server.url, conf.server.port).parse()?)
+        .serve(format!("{}:{}", conf.service.url, conf.service.port).parse()?)
         .await?;
 
     debug!("Server was shut down");

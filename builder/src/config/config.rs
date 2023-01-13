@@ -1,5 +1,4 @@
 use std::fs::File;
-use std::error::Error;
 
 use log::{debug, info, warn, error};
 use serde_yaml;
@@ -7,12 +6,12 @@ use serde::{Serialize, Deserialize};
 
 #[derive(Debug, Serialize, Deserialize)]
 pub struct Config {
-    pub server: Server,
+    pub service: Service,
     pub camera: Camera,
 }
 
 #[derive(Debug, Serialize, Deserialize)]
-pub struct Server {
+pub struct Service {
     pub url: String,
     pub port: u16,
 }
@@ -24,7 +23,7 @@ pub struct Camera {
     pub fps: u32,
 }
 
-pub fn import_config(path: &str) -> Result<Config, Box<dyn Error>> {
+pub fn import_config(path: &str) -> Result<Config, Box<dyn std::error::Error>> {
     debug!("Reading config file");
     let file = File::open(path)?;
 
@@ -53,12 +52,12 @@ mod tests {
     #[test]
     fn check_url() {
         let conf = import_config("src/config/config.yaml").unwrap();
-        assert!(conf.server.url.len() > 0);
+        assert!(conf.service.url.len() > 0);
     }
 
     #[test]
     fn check_port() {
         let conf = import_config("src/config/config.yaml").unwrap();
-        assert!(conf.server.port > 0);
+        assert!(conf.service.port > 0);
     }
 }
