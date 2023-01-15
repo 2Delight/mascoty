@@ -13,7 +13,7 @@ extern crate serde_json;
 extern crate serde_yaml;
 extern crate simple_logger;
 
-use crate::config::config::import_config;
+use crate::config::import_config;
 use crate::input::get_devices;
 
 use crate::service::grpc::mascot_server::MascotServer;

@@ -1,4 +1,4 @@
-use crate::config::config::Config;
+use crate::config::Config;
 use crate::panic_error;
 
 use std::sync::Mutex;
