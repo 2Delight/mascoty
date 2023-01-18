@@ -1,4 +1,4 @@
-use super::{Config, import_config};
+use super::{import_config};
 
 #[test]
 fn check_config_right_path() -> Result<(), Box<dyn std::error::Error>> {
