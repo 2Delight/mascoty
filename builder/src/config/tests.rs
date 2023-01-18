@@ -1,8 +1,9 @@
-use super::import_config;
+use super::{Config, import_config};
 
 #[test]
-fn check_config_right_path() {
-    import_config("src/config/config.yaml").unwrap();
+fn check_config_right_path() -> Result<(), Box<dyn std::error::Error>> {
+    import_config("src/config/config.yaml")?;
+    Ok(())
 }
 
 #[test]
