@@ -1,4 +1,4 @@
-use crate::config::import_config;
+use super::import_config;
 
 #[test]
 fn check_config_right_path() {
