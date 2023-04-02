@@ -4,15 +4,6 @@ mod mascot;
 mod service;
 mod utils;
 
-extern crate dotenv;
-extern crate log;
-extern crate nokhwa;
-extern crate rand;
-extern crate serde;
-extern crate serde_json;
-extern crate serde_yaml;
-extern crate simple_logger;
-
 use crate::config::import_config;
 use crate::input::get_devices;
 
